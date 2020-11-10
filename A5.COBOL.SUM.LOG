@@ -1,0 +1,364 @@
+1PP 5655-EC6 IBM Enterprise COBOL for z/OS  6.2.0 P190107                 Date 03/29/2020  Time 16:16:52   Page     1                
+0Invocation parameters:                                                                                                              
+  NOXREF,NODBCS,APOST,OBJECT,NODYNAM                                                                                                 
+0PROCESS(CBL) statements:                                                                                                            
+  Process rent,nodynam,lib                                                                                                           
+                                                                                                                                     
+         IGYOS4090-I   The "LIB" option specification is no longer required.  COBOL library processing is always in effect.          
+                                                                                                                                     
+                                                                                                                                     
+         IGYOS4020-W   The "NSYMBOL(NATIONAL)" option was discarded due to option conflict resolution.  The "NODBCS" option from     
+                       compiler invocation parameter took precedence.                                                                
+                                                                                                                                     
+0Options in effect:                                                                                                                  
+  NOADATA                                                                                                                            
+    ADV                                                                                                                              
+    AFP(NOVOLATILE)                                                                                                                  
+    APOST                                                                                                                            
+    ARCH(7)                                                                                                                          
+    ARITH(COMPAT)                                                                                                                    
+  NOAWO                                                                                                                              
+  NOBLOCK0                                                                                                                           
+    BUFSIZE(4096)                                                                                                                    
+  NOCICS                                                                                                                             
+    CODEPAGE(1140)                                                                                                                   
+  NOCOMPILE(S)                                                                                                                       
+  NOCOPYLOC                                                                                                                          
+  NOCOPYRIGHT                                                                                                                        
+  NOCURRENCY                                                                                                                         
+    DATA(31)                                                                                                                         
+  NODBCS                                                                                                                             
+  NODECK                                                                                                                             
+  NODEFINE                                                                                                                           
+  NODIAGTRUNC                                                                                                                        
+    DISPSIGN(COMPAT)                                                                                                                 
+  NODLL                                                                                                                              
+  NODUMP                                                                                                                             
+  NODYNAM                                                                                                                            
+  NOEXIT                                                                                                                             
+  NOEXPORTALL                                                                                                                        
+  NOFASTSRT                                                                                                                          
+    FLAG(I,I)                                                                                                                        
+  NOFLAGSTD                                                                                                                          
+    HGPR(PRESERVE)                                                                                                                   
+  NOINITCHECK                                                                                                                        
+    INLINE                                                                                                                           
+    INTDATE(ANSI)                                                                                                                    
+    LANGUAGE(EN)                                                                                                                     
+    LINECOUNT(60)                                                                                                                    
+  NOLIST                                                                                                                             
+  NOMAP                                                                                                                              
+    MAXPCF(100000)                                                                                                                   
+  NOMDECK                                                                                                                            
+  NONAME                                                                                                                             
+    NSYMBOL(DBCS)                                                                                                                    
+  NONUMBER                                                                                                                           
+  NONUMCHECK                                                                                                                         
+    NUMPROC(NOPFD)                                                                                                                   
+1PP 5655-EC6 IBM Enterprise COBOL for z/OS  6.2.0 P190107                 Date 03/29/2020  Time 16:16:52   Page     2                
+0   OBJECT                                                                                                                           
+  NOOFFSET                                                                                                                           
+    OPTIMIZE(0)                                                                                                                      
+    OUTDD(SYSOUT)                                                                                                                    
+  NOPARMCHECK                                                                                                                        
+    PGMNAME(COMPAT)                                                                                                                  
+    QUALIFY(COMPAT)                                                                                                                  
+    RENT                                                                                                                             
+    RMODE(AUTO)                                                                                                                      
+  NORULES                                                                                                                            
+  NOSERVICE                                                                                                                          
+    SEQUENCE                                                                                                                         
+    SOURCE                                                                                                                           
+    SPACE(1)                                                                                                                         
+  NOSQL                                                                                                                              
+    SQLCCSID                                                                                                                         
+  NOSQLIMS                                                                                                                           
+  NOSSRANGE                                                                                                                          
+  NOSTGOPT                                                                                                                           
+    SUPPRESS                                                                                                                         
+  NOTERM                                                                                                                             
+  NOTEST(NODWARF,NOSOURCE,NOSEPARATE)                                                                                                
+  NOTHREAD                                                                                                                           
+    TRUNC(STD)                                                                                                                       
+  NOVBREF                                                                                                                            
+    VLR(STANDARD)                                                                                                                    
+    VSAMOPENFS(COMPAT)                                                                                                               
+  NOWORD                                                                                                                             
+    XMLPARSE(XMLSS)                                                                                                                  
+  NOXREF                                                                                                                             
+    ZONEDATA(PFD)                                                                                                                    
+    ZWB                                                                                                                              
+1PP 5655-EC6 IBM Enterprise COBOL for z/OS  6.2.0 P190107       INVSG36   Date 03/29/2020  Time 16:16:52   Page     3                
+   LineID  PL SL  ----+-*A-1-B--+----2----+----3----+----4----+----5----+----6----+----7-|--+----8 Map and Cross Reference           
+0  000001                IDENTIFICATION DIVISION.                                                                                    
+   000002               *                                                                                                            
+   000003                PROGRAM-ID. INVSG36.                                                                                        
+   000004               *                                                                                                            
+   000005                ENVIRONMENT DIVISION.                                                                                       
+   000006               *                                                                                                            
+   000007                DATA DIVISION.                                                                                              
+   000008               *                                                                                                            
+   000009                WORKING-STORAGE SECTION.                                                                                    
+   000010               *                                                                                                            
+   000011                01  SWITCHES.                                                                                               
+   000012               *                                                                                                            
+   000013                    05  INVOICE-EOF-SW          PIC X(01)    VALUE 'N'.                                                     
+   000014                        88  INVOICE-EOF                      VALUE 'Y'.                                                     
+   000015                    05  FIRST-RECORD-SW         PIC X(01)    VALUE 'Y'.                                                     
+   000016                        88  FIRST-RECORD                     VALUE 'Y'.                                                     
+   000017               *                                                                                                            
+   000018                01  WORK-FIELDS.                                                                                            
+   000019               *                                                                                                            
+   000020                    05  INVOICE-COUNT           PIC S9(05)    COMP-3  VALUE ZERO.                                           
+   000021                    05  INVOICE-TOTAL           PIC S9(07)V99 COMP-3  VALUE ZERO.                                           
+   000022               *                                                                                                            
+   000023                01  RESPONSE-CODE               PIC S9(08)    COMP.                                                         
+   000024               *                                                                                                            
+   000025                COPY SUMSG36.                                                                                               
+   000026C               01  SUMMG36O.                                                                                               
+   000027C                   02  FILLER PIC X(12).                                                                                   
+   000028C                   02  FILLER PICTURE X(2).                                                                                
+   000029C                   02  TRANIDA    PICTURE X.                                                                               
+   000030C                   02  TRANIDO  PIC X(4).                                                                                  
+   000031C                   02  FILLER PICTURE X(2).                                                                                
+   000032C                   02  COUNTA    PICTURE X.                                                                                
+   000033C                   02  COUNTO  PIC ZZ,ZZ9.                                                                                 
+   000034C                   02  FILLER PICTURE X(2).                                                                                
+   000035C                   02  FIRSTA    PICTURE X.                                                                                
+   000036C                   02  FIRSTO  PIC 999999.                                                                                 
+   000037C                   02  FILLER PICTURE X(2).                                                                                
+   000038C                   02  LASTA    PICTURE X.                                                                                 
+   000039C                   02  LASTO  PIC 999999.                                                                                  
+   000040C                   02  FILLER PICTURE X(2).                                                                                
+   000041C                   02  TOTALA    PICTURE X.                                                                                
+   000042C                   02  TOTALO  PIC $$,$$$,$$9.99.                                                                          
+   000043C                   02  FILLER PICTURE X(2).                                                                                
+   000044C                   02  MESSAGEA    PICTURE X.                                                                              
+   000045C                   02  MESSAGEO  PIC X(79).                                                                                
+   000046C                   02  FILLER PICTURE X(2).                                                                                
+   000047C                   02  DUMMYA    PICTURE X.                                                                                
+   000048C                   02  DUMMYO  PIC X(1).                                                                                   
+   000049               *                                                                                                            
+   000050                COPY INVOICE.                                                                                               
+   000051C               01  INVOICE-RECORD.                                                                                         
+   000052C              *                                                                                                            
+   000053C                   05  INV-KEY.                                                                                            
+   000054C                       10  INV-INVOICE-NUMBER          PIC 9(06).                                                          
+   000055C                   05  INV-INVOICE-DATE                PIC X(08).                                                          
+   000056C                   05  INV-CUSTOMER-NUMBER             PIC X(06).                                                          
+   000057C                   05  INV-PO-NUMBER                   PIC X(10).                                                          
+1PP 5655-EC6 IBM Enterprise COBOL for z/OS  6.2.0 P190107       INVSG36   Date 03/29/2020  Time 16:16:52   Page     4                
+   LineID  PL SL  ----+-*A-1-B--+----2----+----3----+----4----+----5----+----6----+----7-|--+----8 Map and Cross Reference           
+0  000058C                   05  INV-LINE-ITEM                   OCCURS 10 TIMES.                                                    
+   000059C                       10  INV-PRODUCT-CODE            PIC X(10).                                                          
+   000060C                       10  INV-QUANTITY                PIC S9(07).                                                         
+   000061C                       10  INV-UNIT-PRICE              PIC S9(07)V99.                                                      
+   000062C                       10  INV-AMOUNT                  PIC S9(07)V99.                                                      
+   000063C                   05  INV-INVOICE-TOTAL               PIC S9(07)V99.                                                      
+   000064C              *                                                                                                            
+   000065               *                                                                                                            
+   000066                COPY ERRPARM.                                                                                               
+   000067C               01  ERROR-PARAMETERS.                                                                                       
+   000068C              *                                                                                                            
+   000069C                   05  ERR-RESP          PIC S9(8)   COMP.                                                                 
+   000070C                   05  ERR-RESP2         PIC S9(8)   COMP.                                                                 
+   000071C                   05  ERR-TRNID         PIC X(4).                                                                         
+   000072C                   05  ERR-RSRCE         PIC X(8).                                                                         
+   000073C                                                                                                                           
+   000074               *                                                                                                            
+   000075                                                                                                                            
+   000076                01   dfhb0020  comp pic s9(4) is global.                                                                    
+   000077                01   dfhb0021  comp pic s9(4) is global.                                                                    
+   000078                01   dfhb0022  comp pic s9(4) is global.                                                                    
+   000079                01   dfhb0023  comp pic s9(4) is global.                                                                    
+   000080                01   dfhb0024  comp pic s9(4) is global.                                                                    
+   000081                01   dfhb0025  comp pic s9(4) is global.                                                                    
+   000082                01   dfhc2550  pic x(255) is global.                                                                        
+   000083                01   dfhc2551  pic x(255) is global.                                                                        
+   000084                01   dfhc2552  pic x(255) is global.                                                                        
+   000085                01   dfhc2553  pic x(255) is global.                                                                        
+   000086                01   dfhc2460  pic x(246) is global.                                                                        
+   000087                01   dfhc2400  pic x(240) is global.                                                                        
+   000088                01   dfhc2401  pic x(240) is global.                                                                        
+   000089                01   dfhc2402  pic x(240) is global.                                                                        
+   000090                01   dfhc2403  pic x(240) is global.                                                                        
+   000091                linkage section.                                                                                            
+   000092                01  dfheiblk.                                                                                               
+   000093                02    eibtime  comp-3 pic s9(7).                                                                            
+   000094                02    eibdate  comp-3 pic s9(7).                                                                            
+   000095                02    eibtrnid pic x(4).                                                                                    
+   000096                02    eibtaskn comp-3 pic s9(7).                                                                            
+   000097                02    eibtrmid pic x(4).                                                                                    
+   000098                02    dfheigdi comp pic s9(4).                                                                              
+   000099                02    eibcposn comp pic s9(4).                                                                              
+   000100                02    eibcalen comp pic s9(4).                                                                              
+   000101                02    eibaid   pic x(1).                                                                                    
+   000102                02    eibfn    pic x(2).                                                                                    
+   000103                02    eibrcode pic x(6).                                                                                    
+   000104                02    eibds    pic x(8).                                                                                    
+   000105                02    eibreqid pic x(8).                                                                                    
+   000106                02    eibrsrce pic x(8).                                                                                    
+   000107                02    eibsync  pic x(1).                                                                                    
+   000108                02    eibfree  pic x(1).                                                                                    
+   000109                02    eibrecv  pic x(1).                                                                                    
+   000110                02    eibfil01 pic x(1).                                                                                    
+   000111                02    eibatt   pic x(1).                                                                                    
+   000112                02    eibeoc   pic x(1).                                                                                    
+   000113                02    eibfmh   pic x(1).                                                                                    
+   000114                02    eibcompl pic x(1).                                                                                    
+1PP 5655-EC6 IBM Enterprise COBOL for z/OS  6.2.0 P190107       INVSG36   Date 03/29/2020  Time 16:16:52   Page     5                
+   LineID  PL SL  ----+-*A-1-B--+----2----+----3----+----4----+----5----+----6----+----7-|--+----8 Map and Cross Reference           
+0  000115                02    eibsig   pic x(1).                                                                                    
+   000116                02    eibconf  pic x(1).                                                                                    
+   000117                02    eiberr   pic x(1).                                                                                    
+   000118                02    eiberrcd pic x(4).                                                                                    
+   000119                02    eibsynrb pic x(1).                                                                                    
+   000120                02    eibnodat pic x(1).                                                                                    
+   000121                02    eibresp  comp pic s9(8).                                                                              
+   000122                02    eibresp2 comp pic s9(8).                                                                              
+   000123                02    eibrldbk pic x(1).                                                                                    
+   000124                01  dfhcommarea picture x(1).                                                                               
+   000125                PROCEDURE DIVISION using dfheiblk dfhcommarea.                                                              
+   000126               *                                                                                                            
+   000127                0000-PREPARE-INVOICE-SUMMARY.                                                                               
+   000128               *                                                                                                            
+   000129                    MOVE LOW-VALUE TO SUMMG36O.                                                                             
+   000130                    PERFORM 1000-START-INVOICE-BROWSE.                                                                      
+   000131                    PERFORM 2000-READ-NEXT-INVOICE                                                                          
+   000132                        UNTIL INVOICE-EOF.                                                                                  
+   000133                    PERFORM 3000-END-INVOICE-BROWSE.                                                                        
+   000134                    PERFORM 4000-SEND-SUMMARY-MAP.                                                                          
+   000135               *                                                                                                            
+   000136               *EXEC CICS                                                                                                   
+   000137               *    RETURN TRANSID('SG36')                                                                                  
+   000138               *END-EXEC.                                                                                                   
+   000139                    Call 'DFHEI1' using by content x'0e0880000700001000f0f0f0f4f2                                           
+   000140               -    '404040' by content 'SG36' end-call.                                                                    
+   000141                                                                                                                            
+   000142               *                                                                                                            
+   000143                1000-START-INVOICE-BROWSE.                                                                                  
+   000144               *                                                                                                            
+   000145                    MOVE 0 TO INV-INVOICE-NUMBER                                                                            
+   000146               *                                                                                                            
+   000147               *EXEC CICS                                                                                                   
+   000148               *    STARTBR FILE('INVG36')                                                                                  
+   000149               *            RIDFLD(INV-INVOICE-NUMBER)                                                                      
+   000150               *            RESP(RESPONSE-CODE)                                                                             
+   000151               *END-EXEC.                                                                                                   
+   000152                    Call 'DFHEI1' using by content x'060cb000270020a000f0f0f0f5f0                                           
+   000153               -    '404040' by content 'INVG36  ' by content x'0000' by content                                            
+   000154                    x'0000' by reference INV-INVOICE-NUMBER end-call                                                        
+   000155                     Move eibresp to RESPONSE-CODE.                                                                         
+   000156                                                                                                                            
+   000157               *                                                                                                            
+   000158               * DFHRESP(NOTFND) = 13                      INSERTED BY TRANSLATOR                                           
+   000159                    IF RESPONSE-CODE = 13                                                                                   
+   000160      1                 MOVE 'Y' TO INVOICE-EOF-SW                                                                          
+   000161                    ELSE                                                                                                    
+   000162               * DFHRESP(NORMAL) = 0                       INSERTED BY TRANSLATOR                                           
+   000163      1                 IF RESPONSE-CODE NOT = 0                                                                            
+   000164      2                     PERFORM 9999-TERMINATE-PROGRAM                                                                  
+   000165      1                 END-IF                                                                                              
+   000166                    END-IF.                                                                                                 
+   000167               *                                                                                                            
+   000168                2000-READ-NEXT-INVOICE.                                                                                     
+   000169               *                                                                                                            
+   000170               *EXEC CICS                                                                                                   
+   000171               *    READNEXT FILE('INVG36')                                                                                 
+1PP 5655-EC6 IBM Enterprise COBOL for z/OS  6.2.0 P190107       INVSG36   Date 03/29/2020  Time 16:16:52   Page     6                
+   LineID  PL SL  ----+-*A-1-B--+----2----+----3----+----4----+----5----+----6----+----7-|--+----8 Map and Cross Reference           
+0  000172               *             INTO(INVOICE-RECORD)                                                                           
+   000173               *             RIDFLD(INV-INVOICE-NUMBER)                                                                     
+   000174               *             RESP(RESPONSE-CODE)                                                                            
+   000175               *END-EXEC.                                                                                                   
+   000176                    Move length of INVOICE-RECORD to dfhb0020                                                               
+   000177                    Call 'DFHEI1' using by content x'060ef400270000b000f0f0f0f6f6                                           
+   000178               -    '404040' by content 'INVG36  ' by reference INVOICE-RECORD by                                           
+   000179                     reference dfhb0020 by reference INV-INVOICE-NUMBER by                                                  
+   000180                    content x'0000' by content x'0000' end-call                                                             
+   000181                           Move eibresp to RESPONSE-CODE.                                                                   
+   000182               *                                                                                                            
+   000183                    EVALUATE RESPONSE-CODE                                                                                  
+   000184               * DFHRESP(NORMAL) = 0                       INSERTED BY TRANSLATOR                                           
+   000185                        WHEN 0                                                                                              
+   000186      1                     MOVE INV-INVOICE-NUMBER TO LASTO                                                                
+   000187      1                     ADD 1 TO INVOICE-COUNT                                                                          
+   000188      1                     ADD INV-INVOICE-TOTAL TO INVOICE-TOTAL                                                          
+   000189      1                     IF FIRST-RECORD                                                                                 
+   000190      2                         MOVE INV-INVOICE-NUMBER TO FIRSTO                                                           
+   000191      2                         MOVE 'N' TO FIRST-RECORD-SW                                                                 
+   000192      1                     END-IF                                                                                          
+   000193               * DFHRESP(ENDFILE) = 20                     INSERTED BY TRANSLATOR                                           
+   000194                        WHEN 20                                                                                             
+   000195      1                     MOVE 'Y' TO INVOICE-EOF-SW                                                                      
+   000196                        WHEN OTHER                                                                                          
+   000197      1                     PERFORM 9999-TERMINATE-PROGRAM                                                                  
+   000198                    END-EVALUATE.                                                                                           
+   000199               *                                                                                                            
+   000200                3000-END-INVOICE-BROWSE.                                                                                    
+   000201               *                                                                                                            
+   000202               *EXEC CICS                                                                                                   
+   000203               *    ENDBR FILE('INVG36')                                                                                    
+   000204               *          RESP(RESPONSE-CODE)                                                                               
+   000205               *END-EXEC.                                                                                                   
+   000206                    Call 'DFHEI1' using by content x'0612a0002700001100f0f0f0f9f0                                           
+   000207               -    '404040' by content 'INVG36  ' by content x'0000' by content                                            
+   000208                    x'0000' end-call                                                                                        
+   000209                     Move eibresp to RESPONSE-CODE.                                                                         
+   000210               *                                                                                                            
+   000211               * DFHRESP(NORMAL) = 0                       INSERTED BY TRANSLATOR                                           
+   000212                    IF RESPONSE-CODE NOT = 0                                                                                
+   000213      1                 PERFORM 9999-TERMINATE-PROGRAM                                                                      
+   000214                    END-IF.                                                                                                 
+   000215               *                                                                                                            
+   000216                4000-SEND-SUMMARY-MAP.                                                                                      
+   000217               *                                                                                                            
+   000218                    MOVE 'SG36'        TO TRANIDO.                                                                          
+   000219                    MOVE INVOICE-COUNT TO COUNTO.                                                                           
+   000220                    MOVE INVOICE-TOTAL TO TOTALO.                                                                           
+   000221               *                                                                                                            
+   000222               *EXEC CICS                                                                                                   
+   000223               *    SEND MAP('SUMMG36')                                                                                     
+   000224               *         MAPSET('SUMSG36')                                                                                  
+   000225               *         FROM(SUMMG36O)                                                                                     
+   000226               *         ERASE                                                                                              
+   000227               *END-EXEC.                                                                                                   
+   000228                    Move length of SUMMG36O to dfhb0020                                                                     
+1PP 5655-EC6 IBM Enterprise COBOL for z/OS  6.2.0 P190107       INVSG36   Date 03/29/2020  Time 16:16:52   Page     7                
+   LineID  PL SL  ----+-*A-1-B--+----2----+----3----+----4----+----5----+----6----+----7-|--+----8 Map and Cross Reference           
+0  000229                    Call 'DFHEI1' using by content x'1804f000070000000005e2040000                                           
+   000230               -    '20f0f0f1f0f5404040' by content 'SUMMG36' by reference                                                  
+   000231                    SUMMG36O by reference dfhb0020 by content 'SUMSG36' end-call.                                           
+   000232                                                                                                                            
+   000233                                                                                                                            
+   000234               *                                                                                                            
+   000235                9999-TERMINATE-PROGRAM.                                                                                     
+   000236               *                                                                                                            
+   000237                    MOVE EIBRESP  TO ERR-RESP.                                                                              
+   000238                    MOVE EIBRESP2 TO ERR-RESP2.                                                                             
+   000239                    MOVE EIBTRNID TO ERR-TRNID.                                                                             
+   000240                    MOVE EIBRSRCE TO ERR-RSRCE.                                                                             
+   000241               *                                                                                                            
+   000242               *EXEC CICS                                                                                                   
+   000243               *    XCTL PROGRAM('SYSERR')                                                                                  
+   000244               *         COMMAREA(ERROR-PARAMETERS)                                                                         
+   000245               *END-EXEC.                                                                                                   
+   000246                    Move length of ERROR-PARAMETERS to dfhb0020                                                             
+   000247                    Call 'DFHEI1' using by content x'0e04e0000700000200f0f0f1f1f9                                           
+   000248               -    '404040' by content 'SYSERR  ' by reference ERROR-PARAMETERS                                            
+   000249                    by reference dfhb0020 end-call.                                                                         
+1PP 5655-EC6 IBM Enterprise COBOL for z/OS  6.2.0 P190107       INVSG36   Date 03/29/2020  Time 16:16:52   Page     8                
+0LineID  Message code  Message text                                                                                                  
+                                                                                                                                     
+         IGYDS0139-W   Diagnostic messages were issued during processing of compiler options.  These messages are located at the     
+                       beginning of the listing.                                                                                     
+-Messages    Total    Informational    Warning    Error    Severe    Terminating                                                     
+0Printed:       3           1              2                                                                                         
+-* Statistics for COBOL program INVSG36:                                                                                             
+ *    Source records = 249                                                                                                           
+ *    Data Division statements = 89                                                                                                  
+ *    Procedure Division statements = 40                                                                                             
+ *    Generated COBOL statements = 0                                                                                                 
+ *    Program complexity factor = 41                                                                                                 
+0End of compilation 1,  program INVSG36,  highest severity 4.                                                                        
+0Return code 4                                                                                                                       

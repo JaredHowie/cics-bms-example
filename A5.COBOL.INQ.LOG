@@ -1,0 +1,782 @@
+1PP 5655-EC6 IBM Enterprise COBOL for z/OS  6.2.0 P190107                 Date 03/29/2020  Time 16:20:22   Page     1                
+0Invocation parameters:                                                                                                              
+  NOXREF,NODBCS,APOST,OBJECT,NODYNAM                                                                                                 
+0PROCESS(CBL) statements:                                                                                                            
+  Process rent,nodynam,lib                                                                                                           
+                                                                                                                                     
+         IGYOS4090-I   The "LIB" option specification is no longer required.  COBOL library processing is always in effect.          
+                                                                                                                                     
+                                                                                                                                     
+         IGYOS4020-W   The "NSYMBOL(NATIONAL)" option was discarded due to option conflict resolution.  The "NODBCS" option from     
+                       compiler invocation parameter took precedence.                                                                
+                                                                                                                                     
+0Options in effect:                                                                                                                  
+  NOADATA                                                                                                                            
+    ADV                                                                                                                              
+    AFP(NOVOLATILE)                                                                                                                  
+    APOST                                                                                                                            
+    ARCH(7)                                                                                                                          
+    ARITH(COMPAT)                                                                                                                    
+  NOAWO                                                                                                                              
+  NOBLOCK0                                                                                                                           
+    BUFSIZE(4096)                                                                                                                    
+  NOCICS                                                                                                                             
+    CODEPAGE(1140)                                                                                                                   
+  NOCOMPILE(S)                                                                                                                       
+  NOCOPYLOC                                                                                                                          
+  NOCOPYRIGHT                                                                                                                        
+  NOCURRENCY                                                                                                                         
+    DATA(31)                                                                                                                         
+  NODBCS                                                                                                                             
+  NODECK                                                                                                                             
+  NODEFINE                                                                                                                           
+  NODIAGTRUNC                                                                                                                        
+    DISPSIGN(COMPAT)                                                                                                                 
+  NODLL                                                                                                                              
+  NODUMP                                                                                                                             
+  NODYNAM                                                                                                                            
+  NOEXIT                                                                                                                             
+  NOEXPORTALL                                                                                                                        
+  NOFASTSRT                                                                                                                          
+    FLAG(I,I)                                                                                                                        
+  NOFLAGSTD                                                                                                                          
+    HGPR(PRESERVE)                                                                                                                   
+  NOINITCHECK                                                                                                                        
+    INLINE                                                                                                                           
+    INTDATE(ANSI)                                                                                                                    
+    LANGUAGE(EN)                                                                                                                     
+    LINECOUNT(60)                                                                                                                    
+  NOLIST                                                                                                                             
+  NOMAP                                                                                                                              
+    MAXPCF(100000)                                                                                                                   
+  NOMDECK                                                                                                                            
+  NONAME                                                                                                                             
+    NSYMBOL(DBCS)                                                                                                                    
+  NONUMBER                                                                                                                           
+  NONUMCHECK                                                                                                                         
+    NUMPROC(NOPFD)                                                                                                                   
+1PP 5655-EC6 IBM Enterprise COBOL for z/OS  6.2.0 P190107                 Date 03/29/2020  Time 16:20:22   Page     2                
+0   OBJECT                                                                                                                           
+  NOOFFSET                                                                                                                           
+    OPTIMIZE(0)                                                                                                                      
+    OUTDD(SYSOUT)                                                                                                                    
+  NOPARMCHECK                                                                                                                        
+    PGMNAME(COMPAT)                                                                                                                  
+    QUALIFY(COMPAT)                                                                                                                  
+    RENT                                                                                                                             
+    RMODE(AUTO)                                                                                                                      
+  NORULES                                                                                                                            
+  NOSERVICE                                                                                                                          
+    SEQUENCE                                                                                                                         
+    SOURCE                                                                                                                           
+    SPACE(1)                                                                                                                         
+  NOSQL                                                                                                                              
+    SQLCCSID                                                                                                                         
+  NOSQLIMS                                                                                                                           
+  NOSSRANGE                                                                                                                          
+  NOSTGOPT                                                                                                                           
+    SUPPRESS                                                                                                                         
+  NOTERM                                                                                                                             
+  NOTEST(NODWARF,NOSOURCE,NOSEPARATE)                                                                                                
+  NOTHREAD                                                                                                                           
+    TRUNC(STD)                                                                                                                       
+  NOVBREF                                                                                                                            
+    VLR(STANDARD)                                                                                                                    
+    VSAMOPENFS(COMPAT)                                                                                                               
+  NOWORD                                                                                                                             
+    XMLPARSE(XMLSS)                                                                                                                  
+  NOXREF                                                                                                                             
+    ZONEDATA(PFD)                                                                                                                    
+    ZWB                                                                                                                              
+1PP 5655-EC6 IBM Enterprise COBOL for z/OS  6.2.0 P190107       CMINQG36  Date 03/29/2020  Time 16:20:22   Page     3                
+   LineID  PL SL  ----+-*A-1-B--+----2----+----3----+----4----+----5----+----6----+----7-|--+----8 Map and Cross Reference           
+0  000001                IDENTIFICATION DIVISION.                                                                                    
+   000002               *                                                                                                            
+   000003                PROGRAM-ID.  CMINQG36.                                                                                      
+   000004               *                                                                                                            
+   000005                ENVIRONMENT DIVISION.                                                                                       
+   000006               *                                                                                                            
+   000007                DATA DIVISION.                                                                                              
+   000008               *                                                                                                            
+   000009                WORKING-STORAGE SECTION.                                                                                    
+   000010               *                                                                                                            
+   000011                01  SWITCHES.                                                                                               
+   000012               *                                                                                                            
+   000013                    05  VALID-DATA-SW               PIC X(01)  VALUE 'Y'.                                                   
+   000014                        88  VALID-DATA                         VALUE 'Y'.                                                   
+   000015                    05  CUSTOMER-FOUND-SW           PIC X(01)  VALUE 'Y'.                                                   
+   000016                        88  CUSTOMER-FOUND                     VALUE 'Y'.                                                   
+   000017               *                                                                                                            
+   000018                01  FLAGS.                                                                                                  
+   000019               *                                                                                                            
+   000020                    05  DISPLAY-FLAG                PIC X(01).                                                              
+   000021                        88  DISPLAY-NEW-CUSTOMER               VALUE '1'.                                                   
+   000022                        88  DISPLAY-SPACES                     VALUE '2'.                                                   
+   000023                        88  DISPLAY-LOW-VALUES                 VALUE '3'.                                                   
+   000024                    05  SEND-FLAG                   PIC X(01).                                                              
+   000025                        88  SEND-ERASE                         VALUE '1'.                                                   
+   000026                        88  SEND-DATAONLY                      VALUE '2'.                                                   
+   000027                        88  SEND-DATAONLY-ALARM                VALUE '3'.                                                   
+   000028               *                                                                                                            
+   000029                01  COMMUNICATION-AREA.                                                                                     
+   000030               *                                                                                                            
+   000031                    05  CA-CUSTOMER-NUMBER          PIC X(06).                                                              
+   000032               *                                                                                                            
+   000033                01  RESPONSE-CODE                   PIC S9(08) COMP.                                                        
+   000034               *                                                                                                            
+   000035                COPY CUSTMAS.                                                                                               
+   000036C               01  CUSTOMER-MASTER-RECORD.                                                                                 
+   000037C              *                                                                                                            
+   000038C                   05  CM-CUSTOMER-NUMBER      PIC X(6).                                                                   
+   000039C                   05  CM-FIRST-NAME           PIC X(20).                                                                  
+   000040C                   05  CM-LAST-NAME            PIC X(30).                                                                  
+   000041C                   05  CM-ADDRESS              PIC X(30).                                                                  
+   000042C                   05  CM-CITY                 PIC X(20).                                                                  
+   000043C                   05  CM-STATE                PIC X(2).                                                                   
+   000044C                   05  CM-ZIP-CODE             PIC X(10).                                                                  
+   000045C                                                                                                                           
+   000046               *                                                                                                            
+   000047                COPY INQSG36.                                                                                               
+   000048C               01  INQMG36I.                                                                                               
+   000049C                   02  FILLER PIC X(12).                                                                                   
+   000050C                   02  TRANIDL    COMP  PIC  S9(4).                                                                        
+   000051C                   02  TRANIDF    PICTURE X.                                                                               
+   000052C                   02  FILLER REDEFINES TRANIDF.                                                                           
+   000053C                     03 TRANIDA    PICTURE X.                                                                              
+   000054C                   02  TRANIDI  PIC X(4).                                                                                  
+   000055C                   02  CUSTNOL    COMP  PIC  S9(4).                                                                        
+   000056C                   02  CUSTNOF    PICTURE X.                                                                               
+   000057C                   02  FILLER REDEFINES CUSTNOF.                                                                           
+1PP 5655-EC6 IBM Enterprise COBOL for z/OS  6.2.0 P190107       CMINQG36  Date 03/29/2020  Time 16:20:22   Page     4                
+   LineID  PL SL  ----+-*A-1-B--+----2----+----3----+----4----+----5----+----6----+----7-|--+----8 Map and Cross Reference           
+0  000058C                     03 CUSTNOA    PICTURE X.                                                                              
+   000059C                   02  CUSTNOI  PIC X(6).                                                                                  
+   000060C                   02  LNAMEL    COMP  PIC  S9(4).                                                                         
+   000061C                   02  LNAMEF    PICTURE X.                                                                                
+   000062C                   02  FILLER REDEFINES LNAMEF.                                                                            
+   000063C                     03 LNAMEA    PICTURE X.                                                                               
+   000064C                   02  LNAMEI  PIC X(30).                                                                                  
+   000065C                   02  FNAMEL    COMP  PIC  S9(4).                                                                         
+   000066C                   02  FNAMEF    PICTURE X.                                                                                
+   000067C                   02  FILLER REDEFINES FNAMEF.                                                                            
+   000068C                     03 FNAMEA    PICTURE X.                                                                               
+   000069C                   02  FNAMEI  PIC X(20).                                                                                  
+   000070C                   02  ADDRL    COMP  PIC  S9(4).                                                                          
+   000071C                   02  ADDRF    PICTURE X.                                                                                 
+   000072C                   02  FILLER REDEFINES ADDRF.                                                                             
+   000073C                     03 ADDRA    PICTURE X.                                                                                
+   000074C                   02  ADDRI  PIC X(30).                                                                                   
+   000075C                   02  CITYL    COMP  PIC  S9(4).                                                                          
+   000076C                   02  CITYF    PICTURE X.                                                                                 
+   000077C                   02  FILLER REDEFINES CITYF.                                                                             
+   000078C                     03 CITYA    PICTURE X.                                                                                
+   000079C                   02  CITYI  PIC X(20).                                                                                   
+   000080C                   02  STATEL    COMP  PIC  S9(4).                                                                         
+   000081C                   02  STATEF    PICTURE X.                                                                                
+   000082C                   02  FILLER REDEFINES STATEF.                                                                            
+   000083C                     03 STATEA    PICTURE X.                                                                               
+   000084C                   02  STATEI  PIC X(2).                                                                                   
+   000085C                   02  ZIPCODEL    COMP  PIC  S9(4).                                                                       
+   000086C                   02  ZIPCODEF    PICTURE X.                                                                              
+   000087C                   02  FILLER REDEFINES ZIPCODEF.                                                                          
+   000088C                     03 ZIPCODEA    PICTURE X.                                                                             
+   000089C                   02  ZIPCODEI  PIC X(10).                                                                                
+   000090C                   02  MESSAGEL    COMP  PIC  S9(4).                                                                       
+   000091C                   02  MESSAGEF    PICTURE X.                                                                              
+   000092C                   02  FILLER REDEFINES MESSAGEF.                                                                          
+   000093C                     03 MESSAGEA    PICTURE X.                                                                             
+   000094C                   02  MESSAGEI  PIC X(79).                                                                                
+   000095C                   02  DUMMYL    COMP  PIC  S9(4).                                                                         
+   000096C                   02  DUMMYF    PICTURE X.                                                                                
+   000097C                   02  FILLER REDEFINES DUMMYF.                                                                            
+   000098C                     03 DUMMYA    PICTURE X.                                                                               
+   000099C                   02  DUMMYI  PIC X(1).                                                                                   
+   000100C               01  INQMG36O REDEFINES INQMG36I.                                                                            
+   000101C                   02  FILLER PIC X(12).                                                                                   
+   000102C                   02  FILLER PICTURE X(3).                                                                                
+   000103C                   02  TRANIDO  PIC X(4).                                                                                  
+   000104C                   02  FILLER PICTURE X(3).                                                                                
+   000105C                   02  CUSTNOO  PIC X(6).                                                                                  
+   000106C                   02  FILLER PICTURE X(3).                                                                                
+   000107C                   02  LNAMEO  PIC X(30).                                                                                  
+   000108C                   02  FILLER PICTURE X(3).                                                                                
+   000109C                   02  FNAMEO  PIC X(20).                                                                                  
+   000110C                   02  FILLER PICTURE X(3).                                                                                
+   000111C                   02  ADDRO  PIC X(30).                                                                                   
+   000112C                   02  FILLER PICTURE X(3).                                                                                
+   000113C                   02  CITYO  PIC X(20).                                                                                   
+   000114C                   02  FILLER PICTURE X(3).                                                                                
+1PP 5655-EC6 IBM Enterprise COBOL for z/OS  6.2.0 P190107       CMINQG36  Date 03/29/2020  Time 16:20:22   Page     5                
+   LineID  PL SL  ----+-*A-1-B--+----2----+----3----+----4----+----5----+----6----+----7-|--+----8 Map and Cross Reference           
+0  000115C                   02  STATEO  PIC X(2).                                                                                   
+   000116C                   02  FILLER PICTURE X(3).                                                                                
+   000117C                   02  ZIPCODEO  PIC X(10).                                                                                
+   000118C                   02  FILLER PICTURE X(3).                                                                                
+   000119C                   02  MESSAGEO  PIC X(79).                                                                                
+   000120C                   02  FILLER PICTURE X(3).                                                                                
+   000121C                   02  DUMMYO  PIC X(1).                                                                                   
+   000122               *                                                                                                            
+   000123                COPY DFHAID.                                                                                                
+   000124C              *****************************************************************                                            
+   000125C              *                                                               *                                            
+   000126C              *                                                               *                                            
+   000127C              *                                                               *                                            
+   000128C              *     Licensed Materials - Property of IBM                      *                                            
+   000129C              *                                                               *                                            
+   000130C              *     "Restricted Materials of IBM"                             *                                            
+   000131C              *                                                               *                                            
+   000132C              *     5655-Y04                                                  *                                            
+   000133C              *                                                               *                                            
+   000134C              *     (C) Copyright IBM Corp. 1988, 2010"                       *                                            
+   000135C              *                                                               *                                            
+   000136C              *                                                               *                                            
+   000137C              *                                                               *                                            
+   000138C              *                                                               *                                            
+   000139C              *   STATUS = 7.1.0                                              *                                            
+   000140C              *                                                               *                                            
+   000141C              * CHANGE ACTIVITY :                                             *                                            
+   000142C              *                                                               *                                            
+   000143C              *   $SEG(DFHAID),COMP(BMS),PROD(CICS TS ):                      *                                            
+   000144C              *                                                               *                                            
+   000145C              *  PN= REASON REL YYMMDD HDXXIII : REMARKS                      *                                            
+   000146C              * $D1= I07991 670 100820 HDIGPG  : Translate unprintable char   *                                            
+   000147C              * $L0= Base   210 88     HD1MA   : Base                         *                                            
+   000148C              *                                                               *                                            
+   000149C              *****************************************************************                                            
+   000150C              *                                                                                                            
+   000151C              *                                                                                                            
+   000152C               01    DFHAID.                                                                                               
+   000153C                 02  DFHNULL   PIC  X  VALUE IS X'00'.                                                                     
+   000154C                 02  DFHENTER  PIC  X  VALUE IS ''''.                                                                      
+   000155C                 02  DFHCLEAR  PIC  X  VALUE IS '_'.                                                                       
+   000156C                 02  DFHCLRP   PIC  X  VALUE IS 'º'.                                                                       
+   000157C                 02  DFHPEN    PIC  X  VALUE IS '='.                                                                       
+   000158C                 02  DFHOPID   PIC  X  VALUE IS 'W'.                                                                       
+   000159C                 02  DFHMSRE   PIC  X  VALUE IS 'X'.                                                                       
+   000160C                 02  DFHSTRF   PIC  X  VALUE IS 'h'.                                                                       
+   000161C                 02  DFHTRIG   PIC  X  VALUE IS '"'.                                                                       
+   000162C                 02  DFHPA1    PIC  X  VALUE IS '%'.                                                                       
+   000163C                 02  DFHPA2    PIC  X  VALUE IS '>'.                                                                       
+   000164C                 02  DFHPA3    PIC  X  VALUE IS ','.                                                                       
+   000165C                 02  DFHPF1    PIC  X  VALUE IS '1'.                                                                       
+   000166C                 02  DFHPF2    PIC  X  VALUE IS '2'.                                                                       
+   000167C                 02  DFHPF3    PIC  X  VALUE IS '3'.                                                                       
+   000168C                 02  DFHPF4    PIC  X  VALUE IS '4'.                                                                       
+   000169C                 02  DFHPF5    PIC  X  VALUE IS '5'.                                                                       
+   000170C                 02  DFHPF6    PIC  X  VALUE IS '6'.                                                                       
+   000171C                 02  DFHPF7    PIC  X  VALUE IS '7'.                                                                       
+1PP 5655-EC6 IBM Enterprise COBOL for z/OS  6.2.0 P190107       CMINQG36  Date 03/29/2020  Time 16:20:22   Page     6                
+   LineID  PL SL  ----+-*A-1-B--+----2----+----3----+----4----+----5----+----6----+----7-|--+----8 Map and Cross Reference           
+0  000172C                 02  DFHPF8    PIC  X  VALUE IS '8'.                                                                       
+   000173C                 02  DFHPF9    PIC  X  VALUE IS '9'.                                                                       
+   000174C                 02  DFHPF10   PIC  X  VALUE IS ':'.                                                                       
+   000175C                 02  DFHPF11   PIC  X  VALUE IS '#'.                                                                       
+   000176C                 02  DFHPF12   PIC  X  VALUE IS '@'.                                                                       
+   000177C                 02  DFHPF13   PIC  X  VALUE IS 'A'.                                                                       
+   000178C                 02  DFHPF14   PIC  X  VALUE IS 'B'.                                                                       
+   000179C                 02  DFHPF15   PIC  X  VALUE IS 'C'.                                                                       
+   000180C                 02  DFHPF16   PIC  X  VALUE IS 'D'.                                                                       
+   000181C                 02  DFHPF17   PIC  X  VALUE IS 'E'.                                                                       
+   000182C                 02  DFHPF18   PIC  X  VALUE IS 'F'.                                                                       
+   000183C                 02  DFHPF19   PIC  X  VALUE IS 'G'.                                                                       
+   000184C                 02  DFHPF20   PIC  X  VALUE IS 'H'.                                                                       
+   000185C                 02  DFHPF21   PIC  X  VALUE IS 'I'.                                                                       
+   000186C                 02  DFHPF22   PIC  X  VALUE IS '›'.                                                                       
+   000187C                 02  DFHPF23   PIC  X  VALUE IS '.'.                                                                       
+   000188C                 02  DFHPF24   PIC  X  VALUE IS '<'.                                                                       
+   000189               *                                                                                                            
+   000190                COPY ERRPARM.                                                                                               
+   000191C               01  ERROR-PARAMETERS.                                                                                       
+   000192C              *                                                                                                            
+   000193C                   05  ERR-RESP          PIC S9(8)   COMP.                                                                 
+   000194C                   05  ERR-RESP2         PIC S9(8)   COMP.                                                                 
+   000195C                   05  ERR-TRNID         PIC X(4).                                                                         
+   000196C                   05  ERR-RSRCE         PIC X(8).                                                                         
+   000197C                                                                                                                           
+   000198               *                                                                                                            
+   000199                                                                                                                            
+   000200                01   dfhb0020  comp pic s9(4) is global.                                                                    
+   000201                01   dfhb0021  comp pic s9(4) is global.                                                                    
+   000202                01   dfhb0022  comp pic s9(4) is global.                                                                    
+   000203                01   dfhb0023  comp pic s9(4) is global.                                                                    
+   000204                01   dfhb0024  comp pic s9(4) is global.                                                                    
+   000205                01   dfhb0025  comp pic s9(4) is global.                                                                    
+   000206                01   dfhc2550  pic x(255) is global.                                                                        
+   000207                01   dfhc2551  pic x(255) is global.                                                                        
+   000208                01   dfhc2552  pic x(255) is global.                                                                        
+   000209                01   dfhc2553  pic x(255) is global.                                                                        
+   000210                01   dfhc2460  pic x(246) is global.                                                                        
+   000211                01   dfhc2400  pic x(240) is global.                                                                        
+   000212                01   dfhc2401  pic x(240) is global.                                                                        
+   000213                01   dfhc2402  pic x(240) is global.                                                                        
+   000214                01   dfhc2403  pic x(240) is global.                                                                        
+   000215                LINKAGE SECTION.                                                                                            
+   000216               *                                                                                                            
+   000217                01  dfheiblk.                                                                                               
+   000218                02    eibtime  comp-3 pic s9(7).                                                                            
+   000219                02    eibdate  comp-3 pic s9(7).                                                                            
+   000220                02    eibtrnid pic x(4).                                                                                    
+   000221                02    eibtaskn comp-3 pic s9(7).                                                                            
+   000222                02    eibtrmid pic x(4).                                                                                    
+   000223                02    dfheigdi comp pic s9(4).                                                                              
+   000224                02    eibcposn comp pic s9(4).                                                                              
+   000225                02    eibcalen comp pic s9(4).                                                                              
+   000226                02    eibaid   pic x(1).                                                                                    
+   000227                02    eibfn    pic x(2).                                                                                    
+   000228                02    eibrcode pic x(6).                                                                                    
+1PP 5655-EC6 IBM Enterprise COBOL for z/OS  6.2.0 P190107       CMINQG36  Date 03/29/2020  Time 16:20:22   Page     7                
+   LineID  PL SL  ----+-*A-1-B--+----2----+----3----+----4----+----5----+----6----+----7-|--+----8 Map and Cross Reference           
+0  000229                02    eibds    pic x(8).                                                                                    
+   000230                02    eibreqid pic x(8).                                                                                    
+   000231                02    eibrsrce pic x(8).                                                                                    
+   000232                02    eibsync  pic x(1).                                                                                    
+   000233                02    eibfree  pic x(1).                                                                                    
+   000234                02    eibrecv  pic x(1).                                                                                    
+   000235                02    eibfil01 pic x(1).                                                                                    
+   000236                02    eibatt   pic x(1).                                                                                    
+   000237                02    eibeoc   pic x(1).                                                                                    
+   000238                02    eibfmh   pic x(1).                                                                                    
+   000239                02    eibcompl pic x(1).                                                                                    
+   000240                02    eibsig   pic x(1).                                                                                    
+   000241                02    eibconf  pic x(1).                                                                                    
+   000242                02    eiberr   pic x(1).                                                                                    
+   000243                02    eiberrcd pic x(4).                                                                                    
+   000244                02    eibsynrb pic x(1).                                                                                    
+   000245                02    eibnodat pic x(1).                                                                                    
+   000246                02    eibresp  comp pic s9(8).                                                                              
+   000247                02    eibresp2 comp pic s9(8).                                                                              
+   000248                02    eibrldbk pic x(1).                                                                                    
+   000249                01  DFHCOMMAREA                     PIC X(06).                                                              
+   000250               *                                                                                                            
+   000251                PROCEDURE DIVISION using dfheiblk dfhcommarea.                                                              
+   000252               *                                                                                                            
+   000253                0000-PROCESS-CUSTOMER-INQUIRY.                                                                              
+   000254               *                                                                                                            
+   000255                    IF EIBCALEN > ZERO                                                                                      
+   000256      1                 MOVE DFHCOMMAREA TO COMMUNICATION-AREA                                                              
+   000257                    END-IF.                                                                                                 
+   000258               *                                                                                                            
+   000259                    EVALUATE TRUE                                                                                           
+   000260               *                                                                                                            
+   000261                        WHEN EIBCALEN = ZERO                                                                                
+   000262      1                     MOVE LOW-VALUE TO CA-CUSTOMER-NUMBER                                                            
+   000263      1                     MOVE LOW-VALUE TO INQMG36O                                                                      
+   000264      1                     SET SEND-ERASE TO TRUE                                                                          
+   000265      1                     PERFORM 1500-SEND-INQUIRY-MAP                                                                   
+   000266               *                                                                                                            
+   000267                        WHEN EIBAID = DFHCLEAR                                                                              
+   000268      1                     MOVE LOW-VALUE TO CA-CUSTOMER-NUMBER                                                            
+   000269      1                     MOVE LOW-VALUE TO INQMG36O                                                                      
+   000270      1                     SET SEND-ERASE TO TRUE                                                                          
+   000271      1                     PERFORM 1500-SEND-INQUIRY-MAP                                                                   
+   000272               *                                                                                                            
+   000273                        WHEN EIBAID = DFHPA1 OR DFHPA2 OR DFHPA3                                                            
+   000274      1                     CONTINUE                                                                                        
+   000275               *                                                                                                            
+   000276                        WHEN EIBAID = DFHPF3 OR DFHPF12                                                                     
+   000277               *EXEC CICS                                                                                                   
+   000278               *    XCTL PROGRAM('UUMENG36')                                                                                
+   000279               *END-EXEC                                                                                                    
+   000280      1                     Call 'DFHEI1' using by content x'0e0480000700000200f0                                           
+   000281      1        -    'f0f0f7f3404040' by content 'UUMENG36' end-call                                                         
+   000282                                                                                                                            
+   000283               *                                                                                                            
+   000284                        WHEN EIBAID = DFHENTER                                                                              
+   000285      1                     PERFORM 1000-DISPLAY-SELECTED-CUSTOMER                                                          
+1PP 5655-EC6 IBM Enterprise COBOL for z/OS  6.2.0 P190107       CMINQG36  Date 03/29/2020  Time 16:20:22   Page     8                
+   LineID  PL SL  ----+-*A-1-B--+----2----+----3----+----4----+----5----+----6----+----7-|--+----8 Map and Cross Reference           
+0  000286               *                                                                                                            
+   000287                        WHEN EIBAID = DFHPF5                                                                                
+   000288      1                     PERFORM 2000-DISPLAY-FIRST-CUSTOMER                                                             
+   000289               *                                                                                                            
+   000290                        WHEN EIBAID = DFHPF6                                                                                
+   000291      1                     PERFORM 3000-DISPLAY-LAST-CUSTOMER                                                              
+   000292               *                                                                                                            
+   000293                        WHEN EIBAID = DFHPF7                                                                                
+   000294      1                     PERFORM 4000-DISPLAY-PREV-CUSTOMER                                                              
+   000295               *                                                                                                            
+   000296                        WHEN EIBAID = DFHPF8                                                                                
+   000297      1                     PERFORM 5000-DISPLAY-NEXT-CUSTOMER                                                              
+   000298               *                                                                                                            
+   000299                        WHEN OTHER                                                                                          
+   000300      1                     MOVE LOW-VALUE TO INQMG36O                                                                      
+   000301      1                     MOVE 'Invalid key pressed.' TO MESSAGEO                                                         
+   000302      1                     SET SEND-DATAONLY-ALARM TO TRUE                                                                 
+   000303      1                     PERFORM 1500-SEND-INQUIRY-MAP                                                                   
+   000304               *                                                                                                            
+   000305                    END-EVALUATE.                                                                                           
+   000306               *                                                                                                            
+   000307               *EXEC CICS                                                                                                   
+   000308               *    RETURN TRANSID('IG36')                                                                                  
+   000309               *           COMMAREA(COMMUNICATION-AREA)                                                                     
+   000310               *END-EXEC.                                                                                                   
+   000311                    Move length of COMMUNICATION-AREA to dfhb0020                                                           
+   000312                    Call 'DFHEI1' using by content x'0e08e0000700001000f0f0f1f0f0                                           
+   000313               -    '404040' by content 'IG36' by reference COMMUNICATION-AREA by                                           
+   000314                     reference dfhb0020 end-call.                                                                           
+   000315               *                                                                                                            
+   000316                1000-DISPLAY-SELECTED-CUSTOMER.                                                                             
+   000317               *                                                                                                            
+   000318                    PERFORM 1100-RECEIVE-INQUIRY-MAP.                                                                       
+   000319                    PERFORM 1200-EDIT-CUSTOMER-NUMBER.                                                                      
+   000320                    IF VALID-DATA                                                                                           
+   000321      1                 PERFORM 1300-READ-CUSTOMER-RECORD                                                                   
+   000322      1                 IF CUSTOMER-FOUND                                                                                   
+   000323      2                     SET DISPLAY-NEW-CUSTOMER TO TRUE                                                                
+   000324      2                     PERFORM 1400-DISPLAY-INQUIRY-RESULTS                                                            
+   000325      2                     MOVE CM-CUSTOMER-NUMBER TO CA-CUSTOMER-NUMBER                                                   
+   000326      1                 ELSE                                                                                                
+   000327      2                     SET DISPLAY-SPACES TO TRUE                                                                      
+   000328      2                     PERFORM 1400-DISPLAY-INQUIRY-RESULTS                                                            
+   000329      1                 END-IF                                                                                              
+   000330                    ELSE                                                                                                    
+   000331      1                 SET DISPLAY-LOW-VALUES TO TRUE                                                                      
+   000332      1                 PERFORM 1400-DISPLAY-INQUIRY-RESULTS                                                                
+   000333                    END-IF.                                                                                                 
+   000334               *                                                                                                            
+   000335                1100-RECEIVE-INQUIRY-MAP.                                                                                   
+   000336               *                                                                                                            
+   000337               *EXEC CICS                                                                                                   
+   000338               *    RECEIVE MAP('INQMG36')                                                                                  
+   000339               *            MAPSET('INQSG36')                                                                               
+   000340               *            INTO(INQMG36I)                                                                                  
+   000341               *END-EXEC.                                                                                                   
+   000342                    Call 'DFHEI1' using by content x'1802d00007000000000509000000                                           
+1PP 5655-EC6 IBM Enterprise COBOL for z/OS  6.2.0 P190107       CMINQG36  Date 03/29/2020  Time 16:20:22   Page     9                
+   LineID  PL SL  ----+-*A-1-B--+----2----+----3----+----4----+----5----+----6----+----7-|--+----8 Map and Cross Reference           
+0  000343               -    '20f0f0f1f2f6404040' by content 'INQMG36' by reference                                                  
+   000344                    INQMG36I by content x'0000' by content 'INQSG36' end-call.                                              
+   000345                                                                                                                            
+   000346                                                                                                                            
+   000347               *                                                                                                            
+   000348                    INSPECT INQMG36I                                                                                        
+   000349                        REPLACING ALL '_' BY SPACE.                                                                         
+   000350               *                                                                                                            
+   000351                1200-EDIT-CUSTOMER-NUMBER.                                                                                  
+   000352               *                                                                                                            
+   000353                    IF       CUSTNOL = ZERO                                                                                 
+   000354                          OR CUSTNOI = SPACE                                                                                
+   000355      1                 MOVE 'N' TO VALID-DATA-SW                                                                           
+   000356      1                 MOVE 'You must enter a customer number.' TO MESSAGEO                                                
+   000357                    END-IF.                                                                                                 
+   000358               *                                                                                                            
+   000359                1300-READ-CUSTOMER-RECORD.                                                                                  
+   000360               *                                                                                                            
+   000361               *EXEC CICS                                                                                                   
+   000362               *    READ FILE('CMFG36')                                                                                     
+   000363               *         INTO(CUSTOMER-MASTER-RECORD)                                                                       
+   000364               *         RIDFLD(CUSTNOI)                                                                                    
+   000365               *         RESP(RESPONSE-CODE)                                                                                
+   000366               *END-EXEC.                                                                                                   
+   000367                    Move length of CUSTOMER-MASTER-RECORD to dfhb0020                                                       
+   000368                    Call 'DFHEI1' using by content x'0602f0002700008000f0f0f1f4f5                                           
+   000369               -    '404040' by content 'CMFG36  ' by reference                                                             
+   000370                    CUSTOMER-MASTER-RECORD by reference dfhb0020 by reference                                               
+   000371                    CUSTNOI end-call     Move eibresp to RESPONSE-CODE.                                                     
+   000372                                                                                                                            
+   000373               *                                                                                                            
+   000374               * DFHRESP(NOTFND) = 13                      INSERTED BY TRANSLATOR                                           
+   000375                    IF RESPONSE-CODE = 13                                                                                   
+   000376      1                 MOVE 'N' TO CUSTOMER-FOUND-SW                                                                       
+   000377      1                 MOVE 'That customer does not exist.' TO MESSAGEO                                                    
+   000378                    ELSE                                                                                                    
+   000379               * DFHRESP(NORMAL) = 0                       INSERTED BY TRANSLATOR                                           
+   000380      1                 IF RESPONSE-CODE NOT = 0                                                                            
+   000381      2                     PERFORM 9999-TERMINATE-PROGRAM                                                                  
+   000382      1                 END-IF                                                                                              
+   000383                    END-IF.                                                                                                 
+   000384               *                                                                                                            
+   000385                1400-DISPLAY-INQUIRY-RESULTS.                                                                               
+   000386               *                                                                                                            
+   000387                    IF DISPLAY-NEW-CUSTOMER                                                                                 
+   000388      1                 MOVE CM-CUSTOMER-NUMBER TO CUSTNOO                                                                  
+   000389      1                 MOVE CM-LAST-NAME       TO LNAMEO                                                                   
+   000390      1                 MOVE CM-FIRST-NAME      TO FNAMEO                                                                   
+   000391      1                 MOVE CM-ADDRESS         TO ADDRO                                                                    
+   000392      1                 MOVE CM-CITY            TO CITYO                                                                    
+   000393      1                 MOVE CM-STATE           TO STATEO                                                                   
+   000394      1                 MOVE CM-ZIP-CODE        TO ZIPCODEO                                                                 
+   000395      1                 MOVE SPACE              TO MESSAGEO                                                                 
+   000396      1                 SET SEND-DATAONLY       TO TRUE                                                                     
+   000397                    ELSE                                                                                                    
+   000398      1                 IF DISPLAY-SPACES                                                                                   
+   000399      2                     MOVE LOW-VALUE TO CUSTNOO                                                                       
+1PP 5655-EC6 IBM Enterprise COBOL for z/OS  6.2.0 P190107       CMINQG36  Date 03/29/2020  Time 16:20:22   Page    10                
+   LineID  PL SL  ----+-*A-1-B--+----2----+----3----+----4----+----5----+----6----+----7-|--+----8 Map and Cross Reference           
+0  000400      2                     MOVE SPACE     TO LNAMEO                                                                        
+   000401      2                                       FNAMEO                                                                        
+   000402      2                                       ADDRO                                                                         
+   000403      2                                       CITYO                                                                         
+   000404      2                                       STATEO                                                                        
+   000405      2                                       ZIPCODEO                                                                      
+   000406      2                     SET SEND-DATAONLY-ALARM TO TRUE                                                                 
+   000407      1                 ELSE                                                                                                
+   000408      2                     IF DISPLAY-LOW-VALUES                                                                           
+   000409      3                         SET SEND-DATAONLY-ALARM TO TRUE                                                             
+   000410      2                     END-IF                                                                                          
+   000411      1                 END-IF                                                                                              
+   000412                    END-IF.                                                                                                 
+   000413               *                                                                                                            
+   000414                    PERFORM 1500-SEND-INQUIRY-MAP.                                                                          
+   000415               *                                                                                                            
+   000416                1500-SEND-INQUIRY-MAP.                                                                                      
+   000417               *                                                                                                            
+   000418                    MOVE 'IG36' TO TRANIDO.                                                                                 
+   000419               *                                                                                                            
+   000420                    EVALUATE TRUE                                                                                           
+   000421                        WHEN SEND-ERASE                                                                                     
+   000422               *EXEC CICS                                                                                                   
+   000423               *    SEND MAP('INQMG36')                                                                                     
+   000424               *         MAPSET('INQSG36')                                                                                  
+   000425               *         FROM(INQMG36O)                                                                                     
+   000426               *         ERASE                                                                                              
+   000427               *END-EXEC                                                                                                    
+   000428      1                     Move length of INQMG36O to dfhb0020                                                             
+   000429      1                     Call 'DFHEI1' using by content x'1804f000070000000005                                           
+   000430      1        -    'e204000020f0f0f1f9f8404040' by content 'INQMG36' by                                                    
+   000431      1             reference INQMG36O by reference dfhb0020 by content 'INQSG36'                                           
+   000432      1              end-call                                                                                               
+   000433                                                                                                                            
+   000434                        WHEN SEND-DATAONLY                                                                                  
+   000435               *EXEC CICS                                                                                                   
+   000436               *    SEND MAP('INQMG36')                                                                                     
+   000437               *         MAPSET('INQSG36')                                                                                  
+   000438               *         FROM(INQMG36O)                                                                                     
+   000439               *         DATAONLY                                                                                           
+   000440               *END-EXEC                                                                                                    
+   000441      1                     Move length of INQMG36O to dfhb0020                                                             
+   000442      1                     Call 'DFHEI1' using by content x'1804f000070000000005                                           
+   000443      1        -    '2004000020f0f0f2f0f5404040' by content 'INQMG36' by                                                    
+   000444      1             reference INQMG36O by reference dfhb0020 by content 'INQSG36'                                           
+   000445      1              end-call                                                                                               
+   000446                                                                                                                            
+   000447                        WHEN SEND-DATAONLY-ALARM                                                                            
+   000448               *EXEC CICS                                                                                                   
+   000449               *    SEND MAP('INQMG36')                                                                                     
+   000450               *         MAPSET('INQSG36')                                                                                  
+   000451               *         FROM(INQMG36O)                                                                                     
+   000452               *         DATAONLY                                                                                           
+   000453               *         ALARM                                                                                              
+   000454               *END-EXEC                                                                                                    
+   000455      1                     Move length of INQMG36O to dfhb0020                                                             
+   000456      1                     Call 'DFHEI1' using by content x'1804f0000700c400000d                                           
+1PP 5655-EC6 IBM Enterprise COBOL for z/OS  6.2.0 P190107       CMINQG36  Date 03/29/2020  Time 16:20:22   Page    11                
+   LineID  PL SL  ----+-*A-1-B--+----2----+----3----+----4----+----5----+----6----+----7-|--+----8 Map and Cross Reference           
+0  000457      1        -    '2004000020f0f0f2f1f2404040' by content 'INQMG36' by                                                    
+   000458      1             reference INQMG36O by reference dfhb0020 by content 'INQSG36'                                           
+   000459      1              end-call                                                                                               
+   000460                                                                                                                            
+   000461                                                                                                                            
+   000462                    END-EVALUATE.                                                                                           
+   000463               *                                                                                                            
+   000464                2000-DISPLAY-FIRST-CUSTOMER.                                                                                
+   000465               *                                                                                                            
+   000466                    MOVE LOW-VALUE TO CM-CUSTOMER-NUMBER                                                                    
+   000467                                      INQMG36O.                                                                             
+   000468                    PERFORM 2100-START-CUSTOMER-BROWSE.                                                                     
+   000469                    IF CUSTOMER-FOUND                                                                                       
+   000470      1                 PERFORM 2200-READ-NEXT-CUSTOMER                                                                     
+   000471                    END-IF.                                                                                                 
+   000472                    PERFORM 2300-END-CUSTOMER-BROWSE.                                                                       
+   000473                    IF CUSTOMER-FOUND                                                                                       
+   000474      1                 SET DISPLAY-NEW-CUSTOMER TO TRUE                                                                    
+   000475      1                 PERFORM 1400-DISPLAY-INQUIRY-RESULTS                                                                
+   000476      1                 MOVE CM-CUSTOMER-NUMBER TO CA-CUSTOMER-NUMBER                                                       
+   000477                    ELSE                                                                                                    
+   000478      1                 SET DISPLAY-SPACES TO TRUE                                                                          
+   000479      1                 PERFORM 1400-DISPLAY-INQUIRY-RESULTS                                                                
+   000480                    END-IF.                                                                                                 
+   000481               *                                                                                                            
+   000482                2100-START-CUSTOMER-BROWSE.                                                                                 
+   000483               *                                                                                                            
+   000484               *EXEC CICS                                                                                                   
+   000485               *    STARTBR FILE('CMFG36')                                                                                  
+   000486               *            RIDFLD(CM-CUSTOMER-NUMBER)                                                                      
+   000487               *            RESP(RESPONSE-CODE)                                                                             
+   000488               *END-EXEC.                                                                                                   
+   000489                    Call 'DFHEI1' using by content x'060cb000270020a000f0f0f2f4f1                                           
+   000490               -    '404040' by content 'CMFG36  ' by content x'0000' by content                                            
+   000491                    x'0000' by reference CM-CUSTOMER-NUMBER end-call                                                        
+   000492                     Move eibresp to RESPONSE-CODE.                                                                         
+   000493                                                                                                                            
+   000494               *                                                                                                            
+   000495               * DFHRESP(NORMAL) = 0                       INSERTED BY TRANSLATOR                                           
+   000496                    IF RESPONSE-CODE = 0                                                                                    
+   000497      1                 MOVE 'Y' TO CUSTOMER-FOUND-SW                                                                       
+   000498      1                 MOVE SPACE TO MESSAGEO                                                                              
+   000499                    ELSE                                                                                                    
+   000500               * DFHRESP(NOTFND) = 13                      INSERTED BY TRANSLATOR                                           
+   000501      1                 IF RESPONSE-CODE = 13                                                                               
+   000502      2                     MOVE 'N' TO CUSTOMER-FOUND-SW                                                                   
+   000503      2                     MOVE 'There are no customers in the file.'                                                      
+   000504      2                         TO MESSAGEO                                                                                 
+   000505      1                 ELSE                                                                                                
+   000506      2                     PERFORM 9999-TERMINATE-PROGRAM                                                                  
+   000507      1                 END-IF                                                                                              
+   000508                    END-IF.                                                                                                 
+   000509               *                                                                                                            
+   000510                2200-READ-NEXT-CUSTOMER.                                                                                    
+   000511               *                                                                                                            
+   000512               *EXEC CICS                                                                                                   
+   000513               *    READNEXT FILE('CMFG36')                                                                                 
+1PP 5655-EC6 IBM Enterprise COBOL for z/OS  6.2.0 P190107       CMINQG36  Date 03/29/2020  Time 16:20:22   Page    12                
+   LineID  PL SL  ----+-*A-1-B--+----2----+----3----+----4----+----5----+----6----+----7-|--+----8 Map and Cross Reference           
+0  000514               *             INTO(CUSTOMER-MASTER-RECORD)                                                                   
+   000515               *             RIDFLD(CM-CUSTOMER-NUMBER)                                                                     
+   000516               *             RESP(RESPONSE-CODE)                                                                            
+   000517               *END-EXEC.                                                                                                   
+   000518                    Move length of CUSTOMER-MASTER-RECORD to dfhb0020                                                       
+   000519                    Call 'DFHEI1' using by content x'060ef400270000b000f0f0f2f6f2                                           
+   000520               -    '404040' by content 'CMFG36  ' by reference                                                             
+   000521                    CUSTOMER-MASTER-RECORD by reference dfhb0020 by reference                                               
+   000522                    CM-CUSTOMER-NUMBER by content x'0000' by content x'0000'                                                
+   000523                    end-call                 Move eibresp to RESPONSE-CODE.                                                 
+   000524               *                                                                                                            
+   000525                    EVALUATE RESPONSE-CODE                                                                                  
+   000526               * DFHRESP(NORMAL) = 0                       INSERTED BY TRANSLATOR                                           
+   000527                        WHEN 0                                                                                              
+   000528      1                     MOVE 'Y' TO CUSTOMER-FOUND-SW                                                                   
+   000529               * DFHRESP(ENDFILE) = 20                     INSERTED BY TRANSLATOR                                           
+   000530                        WHEN 20                                                                                             
+   000531      1                     MOVE 'N' TO CUSTOMER-FOUND-SW                                                                   
+   000532      1                     MOVE 'There are no more records in the file.'                                                   
+   000533      1                         TO MESSAGEO                                                                                 
+   000534                        WHEN OTHER                                                                                          
+   000535      1                     PERFORM 9999-TERMINATE-PROGRAM                                                                  
+   000536                    END-EVALUATE.                                                                                           
+   000537               *                                                                                                            
+   000538                2300-END-CUSTOMER-BROWSE.                                                                                   
+   000539               *                                                                                                            
+   000540               *EXEC CICS                                                                                                   
+   000541               *    ENDBR FILE('CMFG36')                                                                                    
+   000542               *          RESP(RESPONSE-CODE)                                                                               
+   000543               *END-EXEC.                                                                                                   
+   000544                    Call 'DFHEI1' using by content x'0612a0002700001100f0f0f2f8f2                                           
+   000545               -    '404040' by content 'CMFG36  ' by content x'0000' by content                                            
+   000546                    x'0000' end-call                                                                                        
+   000547                     Move eibresp to RESPONSE-CODE.                                                                         
+   000548               *                                                                                                            
+   000549               * DFHRESP(NORMAL) = 0                       INSERTED BY TRANSLATOR                                           
+   000550                    IF RESPONSE-CODE NOT = 0                                                                                
+   000551      1                 PERFORM 9999-TERMINATE-PROGRAM                                                                      
+   000552                    END-IF.                                                                                                 
+   000553               *                                                                                                            
+   000554                3000-DISPLAY-LAST-CUSTOMER.                                                                                 
+   000555               *                                                                                                            
+   000556                    MOVE HIGH-VALUE TO CM-CUSTOMER-NUMBER.                                                                  
+   000557                    MOVE LOW-VALUE  TO INQMG36O.                                                                            
+   000558                    PERFORM 2100-START-CUSTOMER-BROWSE.                                                                     
+   000559                    IF CUSTOMER-FOUND                                                                                       
+   000560      1                 PERFORM 3100-READ-PREV-CUSTOMER                                                                     
+   000561                    END-IF.                                                                                                 
+   000562                    PERFORM 2300-END-CUSTOMER-BROWSE.                                                                       
+   000563                    IF CUSTOMER-FOUND                                                                                       
+   000564      1                 SET DISPLAY-NEW-CUSTOMER TO TRUE                                                                    
+   000565      1                 PERFORM 1400-DISPLAY-INQUIRY-RESULTS                                                                
+   000566      1                 MOVE CM-CUSTOMER-NUMBER TO CA-CUSTOMER-NUMBER                                                       
+   000567                    ELSE                                                                                                    
+   000568      1                 SET DISPLAY-SPACES TO TRUE                                                                          
+   000569      1                 PERFORM 1400-DISPLAY-INQUIRY-RESULTS                                                                
+   000570                    END-IF.                                                                                                 
+1PP 5655-EC6 IBM Enterprise COBOL for z/OS  6.2.0 P190107       CMINQG36  Date 03/29/2020  Time 16:20:22   Page    13                
+   LineID  PL SL  ----+-*A-1-B--+----2----+----3----+----4----+----5----+----6----+----7-|--+----8 Map and Cross Reference           
+0  000571               *                                                                                                            
+   000572                3100-READ-PREV-CUSTOMER.                                                                                    
+   000573               *                                                                                                            
+   000574               *EXEC CICS                                                                                                   
+   000575               *    READPREV FILE('CMFG36')                                                                                 
+   000576               *             INTO(CUSTOMER-MASTER-RECORD)                                                                   
+   000577               *             RIDFLD(CM-CUSTOMER-NUMBER)                                                                     
+   000578               *             RESP(RESPONSE-CODE)                                                                            
+   000579               *END-EXEC.                                                                                                   
+   000580                    Move length of CUSTOMER-MASTER-RECORD to dfhb0020                                                       
+   000581                    Call 'DFHEI1' using by content x'0610f400270000b400f0f0f3f1f1                                           
+   000582               -    '404040' by content 'CMFG36  ' by reference                                                             
+   000583                    CUSTOMER-MASTER-RECORD by reference dfhb0020 by reference                                               
+   000584                    CM-CUSTOMER-NUMBER by content x'0000' by content x'0000'                                                
+   000585                    end-call                 Move eibresp to RESPONSE-CODE.                                                 
+   000586               *                                                                                                            
+   000587                    EVALUATE RESPONSE-CODE                                                                                  
+   000588               * DFHRESP(NORMAL) = 0                       INSERTED BY TRANSLATOR                                           
+   000589                        WHEN 0                                                                                              
+   000590      1                     MOVE 'Y' TO CUSTOMER-FOUND-SW                                                                   
+   000591               * DFHRESP(ENDFILE) = 20                     INSERTED BY TRANSLATOR                                           
+   000592                        WHEN 20                                                                                             
+   000593      1                     MOVE 'N' TO CUSTOMER-FOUND-SW                                                                   
+   000594      1                     MOVE 'There are no more records in the file.'                                                   
+   000595      1                         TO MESSAGEO                                                                                 
+   000596                        WHEN OTHER                                                                                          
+   000597      1                     PERFORM 9999-TERMINATE-PROGRAM                                                                  
+   000598                    END-EVALUATE.                                                                                           
+   000599               *                                                                                                            
+   000600                4000-DISPLAY-PREV-CUSTOMER.                                                                                 
+   000601               *                                                                                                            
+   000602                    MOVE CA-CUSTOMER-NUMBER TO CM-CUSTOMER-NUMBER.                                                          
+   000603                    MOVE LOW-VALUE          TO INQMG36O.                                                                    
+   000604                    PERFORM 2100-START-CUSTOMER-BROWSE.                                                                     
+   000605                    IF CUSTOMER-FOUND                                                                                       
+   000606      1                 PERFORM 2200-READ-NEXT-CUSTOMER                                                                     
+   000607      1                 PERFORM 3100-READ-PREV-CUSTOMER                                                                     
+   000608      1                 PERFORM 3100-READ-PREV-CUSTOMER                                                                     
+   000609                    END-IF.                                                                                                 
+   000610                    PERFORM 2300-END-CUSTOMER-BROWSE.                                                                       
+   000611                    IF CUSTOMER-FOUND                                                                                       
+   000612      1                 SET DISPLAY-NEW-CUSTOMER TO TRUE                                                                    
+   000613      1                 PERFORM 1400-DISPLAY-INQUIRY-RESULTS                                                                
+   000614      1                 MOVE CM-CUSTOMER-NUMBER TO CA-CUSTOMER-NUMBER                                                       
+   000615                    ELSE                                                                                                    
+   000616      1                 SET DISPLAY-LOW-VALUES TO TRUE                                                                      
+   000617      1                 PERFORM 1400-DISPLAY-INQUIRY-RESULTS                                                                
+   000618                    END-IF.                                                                                                 
+   000619               *                                                                                                            
+   000620                5000-DISPLAY-NEXT-CUSTOMER.                                                                                 
+   000621               *                                                                                                            
+   000622                    MOVE CA-CUSTOMER-NUMBER TO CM-CUSTOMER-NUMBER.                                                          
+   000623                    MOVE LOW-VALUE          TO INQMG36O.                                                                    
+   000624                    PERFORM 2100-START-CUSTOMER-BROWSE.                                                                     
+   000625                    IF CUSTOMER-FOUND                                                                                       
+   000626      1                 PERFORM 2200-READ-NEXT-CUSTOMER                                                                     
+   000627      1                 PERFORM 2200-READ-NEXT-CUSTOMER                                                                     
+1PP 5655-EC6 IBM Enterprise COBOL for z/OS  6.2.0 P190107       CMINQG36  Date 03/29/2020  Time 16:20:22   Page    14                
+   LineID  PL SL  ----+-*A-1-B--+----2----+----3----+----4----+----5----+----6----+----7-|--+----8 Map and Cross Reference           
+0  000628                    END-IF.                                                                                                 
+   000629                    PERFORM 2300-END-CUSTOMER-BROWSE.                                                                       
+   000630                    IF CUSTOMER-FOUND                                                                                       
+   000631      1                 SET DISPLAY-NEW-CUSTOMER TO TRUE                                                                    
+   000632      1                 PERFORM 1400-DISPLAY-INQUIRY-RESULTS                                                                
+   000633      1                 MOVE CM-CUSTOMER-NUMBER TO CA-CUSTOMER-NUMBER                                                       
+   000634                    ELSE                                                                                                    
+   000635      1                 SET DISPLAY-LOW-VALUES TO TRUE                                                                      
+   000636      1                 PERFORM 1400-DISPLAY-INQUIRY-RESULTS                                                                
+   000637                    END-IF.                                                                                                 
+   000638               *                                                                                                            
+   000639                9999-TERMINATE-PROGRAM.                                                                                     
+   000640               *                                                                                                            
+   000641                    MOVE EIBRESP  TO ERR-RESP.                                                                              
+   000642                    MOVE EIBRESP2 TO ERR-RESP2.                                                                             
+   000643                    MOVE EIBTRNID TO ERR-TRNID.                                                                             
+   000644                    MOVE EIBRSRCE TO ERR-RSRCE.                                                                             
+   000645               *                                                                                                            
+   000646               *EXEC CICS                                                                                                   
+   000647               *    XCTL PROGRAM('SYSERR')                                                                                  
+   000648               *         COMMAREA(ERROR-PARAMETERS)                                                                         
+   000649               *END-EXEC.                                                                                                   
+   000650                    Move length of ERROR-PARAMETERS to dfhb0020                                                             
+   000651                    Call 'DFHEI1' using by content x'0e04e0000700000200f0f0f3f7f5                                           
+   000652               -    '404040' by content 'SYSERR  ' by reference ERROR-PARAMETERS                                            
+   000653                    by reference dfhb0020 end-call.                                                                         
+1PP 5655-EC6 IBM Enterprise COBOL for z/OS  6.2.0 P190107       CMINQG36  Date 03/29/2020  Time 16:20:22   Page    15                
+0LineID  Message code  Message text                                                                                                  
+                                                                                                                                     
+         IGYDS0139-W   Diagnostic messages were issued during processing of compiler options.  These messages are located at the     
+                       beginning of the listing.                                                                                     
+-Messages    Total    Informational    Warning    Error    Severe    Terminating                                                     
+0Printed:       3           1              2                                                                                         
+-* Statistics for COBOL program CMINQG36:                                                                                            
+ *    Source records = 653                                                                                                           
+ *    Data Division statements = 167                                                                                                 
+ *    Procedure Division statements = 159                                                                                            
+ *    Generated COBOL statements = 0                                                                                                 
+ *    Program complexity factor = 163                                                                                                
+0End of compilation 1,  program CMINQG36,  highest severity 4.                                                                       
+0Return code 4                                                                                                                       
